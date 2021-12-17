@@ -26,12 +26,20 @@ app.post('/produtos', async (req, res) => {
     res.send(produto);
 });
 
+app.get('/pedidos', async (req, res) => {
+    const pedidos = await Produtos.findAll();
+    res.send(pedidos);
+});
+
+app.post('/pedidos', async (req, res) => {
+    const pedido = await Produtos.create(req.body);
+    res.send(pedido);
+});
+
 app.put('/produtos/:id', async (req, res) => {
     const { id } = req.params;
     const produto = await Produtos.findOne({where: {id}});
-    produto.title = req.body.title;
-    produto.description = req.body.description;
-    produto.completed = req.body.completed;
+    produto.selected = req.body.selected;
     await produto.save();
     res.send(produto);
 });
